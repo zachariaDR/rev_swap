@@ -10,14 +10,21 @@
 #                                                                              #
 # **************************************************************************** #
 
+#Binary Name:
 NAME		= 
 PUSH_SWAP	= push_swap
 CHECKER		= checker
-	
+
+#Compiling Variables
 CC			= cc
-FLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
+#ft_printf Variables:
+LIBFTPRINTF		=	srcs/utils/ft_printf/libftprintf.a
+LIBFTPRINTF_DIR	=	srcs/utils/ft_printf/
+
+#Push_Swap Tools Variables:
 STACK		= $(addprefix stack/, create_new_elem free_stack pop_elem poop_elem \
 			  push_elem push_elem_bottom stack_init is_elem_exist ft_print_stack \
 			  get_max get_min get_elem_index half is_empty is_sorted is_sorted_reversly\
@@ -49,7 +56,7 @@ OBJ_BONUS	= $(FILES_BONUS:=.o)
 HEADER		= $(addprefix includes/, push_swap.h)
 HEADER2		= $(addprefix includes/, checker_bonus.h)
 
-INCLUDES	= -I includes
+INCLUDES	= -I includes -I srcs/utils/ft_printf/
 
 #Colors:
 GREEN		=	\e[92;5;118m
@@ -59,52 +66,53 @@ RESET		=	\e[0m
 CURSIVE		=	\e[33;3m
 
 
-all: $(PUSH_SWAP) 
+all: $(LIBFTPRINTF) $(PUSH_SWAP) 
 
 $(PUSH_SWAP):  $(OBJ) $(HEADER)
-	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(NAME)... $(RESET)\n"
-	@ $(CC) $(OBJ) $(INCLUDES) -o $(PUSH_SWAP)
+	@ $(MAKE) -C $(LIBFTPRINTF_DIR)
+	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(PUSH_SWAP)... $(RESET)\n"
+	@ $(CC) $(CFLAGS) $(OBJ) $(INCLUDES) -o $(PUSH_SWAP)
 	@printf "$(GREEN)    - Executable ready.\n$(RESET)"
 
 %.o: %.c $(HEADER)
 	@printf "$(CURSIVE)$(GRAY) 	- Making object file $(notdir $@) from source file $(notdir $<) ... $(RESET)\n"
-	@ $(CC) -Wall -Wextra -Werror -g $(INCLUDES) -c $< -o $@
-
-norm:
-	@printf "$(CURSIVE)$(GRAY)"
-	@norminette
-	@printf "$(RESET)"
-
-test: all
-	@printf "\n$(YELLOW)	- Testing $(ARG) random numbers.. $(RESET)\n\n"
-	@sh testing/testing.sh $(ARG) 
-
-bonus: $(CHECKER) $(HEADER2)
-
-$(CHECKER):	$(OBJ_BONUS) $(HEADER2)
-	@$(CC) $(OBJ_BONUS) $(INCLUDES) -o $(CHECKER)
-
-clean_bonus:
-	@$(RM) $(OBJ_BONUS)
-fclean_bonus: clean_bonus
-	@$(RM) $(CHECKER)
-re_bonus: fclean_bonus bonus
+	@ $(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
+	@ $(MAKE) clean -C $(LIBFTPRINTF_DIR)
 	@ $(RM) $(OBJ)
 	@printf "$(CURSIVE)$(GRAY)	- Removing object files ... $(RESET)\n"
 	@printf "$(YELLOW)    - Object files removed.$(RESET)\n"
 
 fclean: clean
+	@ $(MAKE) fclean -C $(LIBFTPRINTF_DIR)
 	@ $(RM) $(PUSH_SWAP)
 	@printf "$(CURSIVE)$(GRAY)	- Removing $(PUSH_SWAP)... $(RESET)\n"
 	@printf "$(YELLOW)    - Executable removed.$(RESET)\n"
 
+$(LIBFTPRINTF): $(LIBFTPRINTF_DIR)
+	@ $(MAKE) -C $(LIBFTPRINTF_DIR)
+
+bonus: $(CHECKER) $(HEADER2)
+
+$(CHECKER):	$(OBJ_BONUS) $(HEADER2)
+	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(CHECKER)... $(RESET)\n"
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(INCLUDES) -o $(CHECKER)
+	@printf "$(GREEN)    - Executable ready.\n$(RESET)"
+
+clean_bonus:
+	@$(RM) $(OBJ_BONUS)
+	@printf "$(CURSIVE)$(GRAY)	- Removing object files ... $(RESET)\n"
+	@printf "$(YELLOW)    - Object files removed.$(RESET)\n"
+
+fclean_bonus: clean_bonus
+	@$(RM) $(CHECKER)
+	@printf "$(CURSIVE)$(GRAY)	- Removing $(CHECKER)... $(RESET)\n"
+	@printf "$(YELLOW)    - Executable removed.$(RESET)\n"
+
+re_bonus: fclean_bonus bonus
+
 re: fclean all
 
-show:
-	echo $(OBJ_BONUS)
-	echo "----------"
-	echo $(SRC_BONUS)
-
-.PHONY: all clean fclean re bonus clean_bonus fclean_bonus test norm
+.PHONY: all clean fclean re bonus clean_bonus fclean_bonus
+.SECONDARY: $(OBJ) $(OBJ_BONUS)

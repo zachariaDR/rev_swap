@@ -11,21 +11,22 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "ft_printf.h"
 
 void	ft_print_stack(t_stack a, char c)
 {
 	t_node	*x;
 
 	x = a.top;
-	printf("\n----- %c ----\n", c);
-	printf("index | data\n");
-	printf("------------\n");
+	ft_printf("\n----- %c ----\n", c);
+	ft_printf("index | data\n");
+	ft_printf("------------\n");
 	if (is_empty(&a))
 		printf("STACK EMPTY\n");
 	while (x)
 	{
-		printf("  %d   |   %d\n", get_elem_index(a, x->data), x->data);
+		ft_printf("  %d   |   %d\n", get_elem_index(a, x->data), x->data);
 		x = x->bellow;
 	}
-	printf("------------\n");
+	ft_printf("------------\n");
 }
