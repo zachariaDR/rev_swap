@@ -6,7 +6,7 @@
 #    By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/11 15:22:28 by zadriouc          #+#    #+#              #
-#    Updated: 2024/06/11 15:22:30 by zadriouc         ###   ########.fr        #
+#    Updated: 2024/06/12 19:54:51 by zadriouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,12 +66,12 @@ RESET		=	\e[0m
 CURSIVE		=	\e[33;3m
 
 
-all: $(LIBFTPRINTF) $(PUSH_SWAP) 
+all: $(PUSH_SWAP) 
 
 $(PUSH_SWAP):  $(OBJ) $(HEADER)
-	@ $(MAKE) -C $(LIBFTPRINTF_DIR)
+	@ $(MAKE) -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
 	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(PUSH_SWAP)... $(RESET)\n"
-	@ $(CC) $(CFLAGS) $(OBJ) $(INCLUDES) -o $(PUSH_SWAP)
+	@ $(CC) $(CFLAGS) $(OBJ) $(INCLUDES) $(LIBFTPRINTF) -o $(PUSH_SWAP)
 	@printf "$(GREEN)    - Executable ready.\n$(RESET)"
 
 %.o: %.c $(HEADER)
@@ -79,13 +79,13 @@ $(PUSH_SWAP):  $(OBJ) $(HEADER)
 	@ $(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@ $(MAKE) clean -C $(LIBFTPRINTF_DIR)
+	@ $(MAKE) clean -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
 	@ $(RM) $(OBJ)
 	@printf "$(CURSIVE)$(GRAY)	- Removing object files ... $(RESET)\n"
 	@printf "$(YELLOW)    - Object files removed.$(RESET)\n"
 
 fclean: clean
-	@ $(MAKE) fclean -C $(LIBFTPRINTF_DIR)
+	@ $(MAKE) fclean -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
 	@ $(RM) $(PUSH_SWAP)
 	@printf "$(CURSIVE)$(GRAY)	- Removing $(PUSH_SWAP)... $(RESET)\n"
 	@printf "$(YELLOW)    - Executable removed.$(RESET)\n"
@@ -97,7 +97,7 @@ bonus: $(CHECKER) $(HEADER2)
 
 $(CHECKER):	$(OBJ_BONUS) $(HEADER2)
 	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(CHECKER)... $(RESET)\n"
-	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(INCLUDES) -o $(CHECKER)
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(INCLUDES) $(LIBFTPRINTF) -o $(CHECKER)
 	@printf "$(GREEN)    - Executable ready.\n$(RESET)"
 
 clean_bonus:
@@ -115,4 +115,4 @@ re_bonus: fclean_bonus bonus
 re: fclean all
 
 .PHONY: all clean fclean re bonus clean_bonus fclean_bonus
-.SECONDARY: $(OBJ) $(OBJ_BONUS)
+.SECONDARY: $(OBJ) $(OBJ_BONUS) push_swap.o checker.o

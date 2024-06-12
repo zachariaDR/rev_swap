@@ -6,7 +6,7 @@
 /*   By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 23:19:35 by zadriouc          #+#    #+#             */
-/*   Updated: 2024/06/11 15:08:24 by zadriouc         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:05:29 by zadriouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	ss_sa_sb(t_stack *a, t_stack *b, int flag);
 void	pa_push_a(t_stack *a, t_stack *b, int flag);
 void	pb_push_b(t_stack *a, t_stack *b, int flag);
 void	ra_rotate_a(t_stack *a, int flag);
-void	rb_rotate_b(t_stack *a, int flag);
+void	rb_rotate_b(t_stack *b, int flag);
 void	rr_ra_rb(t_stack *a, t_stack *b, int flag);
 void	rra_reverse_rotate_a(t_stack *a, int flag);
-void	rrb_reverse_rotate_b(t_stack *a, int flag);
+void	rrb_reverse_rotate_b(t_stack *b, int flag);
 void	rrr_rra_rrb(t_stack *a, t_stack *b, int flag);
 void	reverse_stack(t_stack *a, int flag);
 
