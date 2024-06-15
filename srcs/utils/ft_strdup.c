@@ -6,7 +6,7 @@
 /*   By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 13:12:18 by zadriouc          #+#    #+#             */
-/*   Updated: 2024/06/02 14:15:25 by zadriouc         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:11:12 by zadriouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strdup(const char *s1)
 {
-	char *copy;
-	int i;
+	char	*copy;
+	int		i;
 
 	i = 0;
 	copy = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));

@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
 #include "ft_printf.h"
+#include "push_swap.h"
 
 void	ft_print_stack(t_stack a, char c)
 {
-	t_node	      *x;
+	t_node	*x;
 
 	x = a.top;
 	ft_printf("\n----- %c ----\n", c);

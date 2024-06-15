@@ -6,14 +6,13 @@
 /*   By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 23:19:11 by zadriouc          #+#    #+#             */
-/*   Updated: 2024/06/11 15:08:33 by zadriouc         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:00:41 by zadriouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CHECKER_BONUS_H
 # define CHECKER_BONUS_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
@@ -59,6 +58,9 @@ void				free_stack(t_stack *stack);
 void				ft_print_stack(t_stack a, char c);
 int					is_elem_exist(t_stack a, int elem);
 int					is_empty(t_stack *stack);
+int					is_sorted(t_stack stack);
+int					is_sorted_reversly(t_stack stack);
+void				reverse_stack(t_stack *a);
 
 /* ---- Operations Functions ---- */
 void	sa_swap_a(t_stack *a, int flag);
@@ -72,12 +74,10 @@ void	rr_ra_rb(t_stack *a, t_stack *b, int flag);
 void	rra_reverse_rotate_a(t_stack *a, int flag);
 void	rrb_reverse_rotate_b(t_stack *a, int flag);
 void	rrr_rra_rrb(t_stack *a, t_stack *b, int flag);
-void	reverse_stack(t_stack *a, int flag);
 
 /* ---- Checks Functions ---- */
 void				get_input(t_stack *a, t_stack *b, char **av, int size);
 void				put_error(char *msg);
-int					is_sorted(t_stack stack);
 int					is_int(char *arg);
 int					is_duplicates(char **args, int size);
 int					is_greater_than_int(char **av, int size);

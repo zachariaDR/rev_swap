@@ -6,7 +6,7 @@
 #    By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/11 15:22:28 by zadriouc          #+#    #+#              #
-#    Updated: 2024/06/12 19:54:51 by zadriouc         ###   ########.fr        #
+#    Updated: 2024/06/15 12:04:44 by zadriouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CHECKER		= checker
 
 #Compiling Variables
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3
 RM			= rm -f
 
 #ft_printf Variables:
@@ -28,15 +28,15 @@ LIBFTPRINTF_DIR	=	srcs/utils/ft_printf/
 STACK		= $(addprefix stack/, create_new_elem free_stack pop_elem poop_elem \
 			  push_elem push_elem_bottom stack_init is_elem_exist ft_print_stack \
 			  get_max get_min get_elem_index half is_empty is_sorted is_sorted_reversly\
-			  get_value_of_index)
+			  get_value_of_index reverse_stack)
 OPERATION	= $(addprefix operations/, pa_push_a pb_push_b ra_rotate_a \
 				rb_rotate_b rr_ra_rb rra_reverse_rotate_a \
 				rrb_reverse_rotate_b rrr_rra_rrb sa_swap_a sb_swap_b \
-				ss_sa_sb ra_n rb_n rr_n rra_n rrb_n rrr_n reverse_stack)
+				ss_sa_sb ra_n rb_n rr_n rra_n rrb_n rrr_n )
 OPERATION_B	= $(addprefix operations/, pa_push_a pb_push_b ra_rotate_a \
 				rb_rotate_b rr_ra_rb rra_reverse_rotate_a \
 				rrb_reverse_rotate_b rrr_rra_rrb sa_swap_a sb_swap_b \
-				ss_sa_sb reverse_stack)
+				ss_sa_sb)
 CHECKS		= $(addprefix checks/, get_input is_int is_all_integer is_duplicates size_of_args\
 			  	is_greater_than_int put_error put_args_into_one_list)
 UTILS		= $(addprefix utils/, ft_swap ft_atoi ft_strcmp ft_putstr ft_substr ft_split \
@@ -81,7 +81,7 @@ $(PUSH_SWAP):  $(OBJ) $(HEADER)
 clean:
 	@ $(MAKE) clean -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
 	@ $(RM) $(OBJ)
-	@printf "$(CURSIVE)$(GRAY)	- Removing object files ... $(RESET)\n"
+	@printf "$(CURSIVE)$(GRAY)	- Removing object files for $(PUSH_SWAP)... $(RESET)\n"
 	@printf "$(YELLOW)    - Object files removed.$(RESET)\n"
 
 fclean: clean
@@ -90,19 +90,22 @@ fclean: clean
 	@printf "$(CURSIVE)$(GRAY)	- Removing $(PUSH_SWAP)... $(RESET)\n"
 	@printf "$(YELLOW)    - Executable removed.$(RESET)\n"
 
+re: fclean all
+
 $(LIBFTPRINTF): $(LIBFTPRINTF_DIR)
 	@ $(MAKE) -C $(LIBFTPRINTF_DIR)
 
 bonus: $(CHECKER) $(HEADER2)
 
 $(CHECKER):	$(OBJ_BONUS) $(HEADER2)
+	@ $(MAKE) -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
 	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(CHECKER)... $(RESET)\n"
 	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(INCLUDES) $(LIBFTPRINTF) -o $(CHECKER)
 	@printf "$(GREEN)    - Executable ready.\n$(RESET)"
 
 clean_bonus:
 	@$(RM) $(OBJ_BONUS)
-	@printf "$(CURSIVE)$(GRAY)	- Removing object files ... $(RESET)\n"
+	@printf "$(CURSIVE)$(GRAY)	- Removing object files for $(CHECKER)... $(RESET)\n"
 	@printf "$(YELLOW)    - Object files removed.$(RESET)\n"
 
 fclean_bonus: clean_bonus
@@ -112,7 +115,8 @@ fclean_bonus: clean_bonus
 
 re_bonus: fclean_bonus bonus
 
-re: fclean all
+nice: all bonus clean clean_bonus
+fclean_all: fclean fclean_bonus
 
 .PHONY: all clean fclean re bonus clean_bonus fclean_bonus
 .SECONDARY: $(OBJ) $(OBJ_BONUS) push_swap.o checker.o

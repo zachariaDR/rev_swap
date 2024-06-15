@@ -6,7 +6,7 @@
 /*   By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 23:19:35 by zadriouc          #+#    #+#             */
-/*   Updated: 2024/06/12 20:05:29 by zadriouc         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:00:54 by zadriouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define PUSH_SWAP_H
 
 # include <limits.h>
-# include <math.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -60,6 +58,7 @@ int					is_elem_exist(t_stack a, int elem);
 int					is_empty(t_stack *stack);
 int					is_sorted(t_stack stack);
 int					is_sorted_reversly(t_stack stack);
+void				reverse_stack(t_stack *a);
 t_node				*get_value_of_index(t_stack a, int index);
 
 
@@ -76,7 +75,6 @@ void	rr_ra_rb(t_stack *a, t_stack *b, int flag);
 void	rra_reverse_rotate_a(t_stack *a, int flag);
 void	rrb_reverse_rotate_b(t_stack *b, int flag);
 void	rrr_rra_rrb(t_stack *a, t_stack *b, int flag);
-void	reverse_stack(t_stack *a, int flag);
 
 
 /* ---- Checks Functions ---- */

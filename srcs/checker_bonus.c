@@ -6,7 +6,7 @@
 /*   By: zadriouc <zadriouc@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:22:46 by zadriouc          #+#    #+#             */
-/*   Updated: 2024/06/11 15:26:49 by zadriouc         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:04:00 by zadriouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	rotate_reverse(char *str, t_stack *a, t_stack *b)
 		rr_ra_rb(a, b, true);
 	else if (ft_strlen(str) == 4 && ft_strcmp (str, "rrr\n") == 0)
 		rrr_rra_rrb(a, b, true);
-	else if (ft_strlen(str) == 4 && ft_strcmp (str, "rev\n") == 0)
-		reverse_stack(a, true);
 	else
 	{
 		write(2, "Error\n", 6);
@@ -54,27 +52,6 @@ void	do_operation(char *str, t_stack *a, t_stack *b)
 		rotate_reverse(str, a, b);
 }
 
-void	read_from_stdin(t_stack *a, t_stack *b)
-{
-	char	*input;
-	char	c;
-
-	input = NULL;
-	while (read(0, &c, 1))
-	{
-		if (c == '\n')
-		{
-			do_operation(input, a, b);
-			free(input);
-			input = ft_strdup("");
-		}
-		else
-			input = ft_strjoin(input, c);
-	}
-	free(input);
-
-}
-
 int	main(int ac, char **av)
 {
 	t_stack	*a;
@@ -82,9 +59,7 @@ int	main(int ac, char **av)
 	char *str;
 	
 	if (ac == 1)
-	{		
-		exit (EXIT_FAILURE);
-	}
+		exit (EXIT_SUCCESS);
 	a = stack_init();
 	b = stack_init();
 	get_input(a, b, av + 1, ac - 1);
@@ -96,12 +71,11 @@ int	main(int ac, char **av)
 		str = get_next_line(0);
 	}
 	free(str);
-	// ft_print_stack(*a,'A');
-	// ft_print_stack(*b,'B');
 	if (is_sorted(*a) && is_empty(b))
 		ft_putstr("OK\n");
 	else
 		ft_putstr("KO\n");
 	(free_stack(a), free_stack(b));
+	exit (EXIT_SUCCESS);
 	return (0);
 }

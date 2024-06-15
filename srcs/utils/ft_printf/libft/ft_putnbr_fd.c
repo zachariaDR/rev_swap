@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int ft_nbrlen(int n)
+static int	ft_nbrlen(int n)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ static int ft_nbrlen(int n)
 
 int	ft_putnbr_fd(int n, int fd)
 {
-	int sign;
+	int	sign;
 
 	sign = 0;
 	if (n == -2147483648)
